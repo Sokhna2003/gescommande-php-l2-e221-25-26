@@ -1,4 +1,6 @@
-
+ <?php
+  var_dump($errors);
+  ?>
 
   <!-- En-tête -->
   <header class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">

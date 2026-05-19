@@ -9,22 +9,13 @@ loadView("clients/liste",["clients"=>$clients,"total_client"=>$total_client]);
 $ajout=function(){
     $errors=[];
     if (isset($_POST["ajouter"])) {
-        if(empty($_POST["prenom"])){
-            $errors["prenom"]="Veuillez renseigner le prenom";
-        }
-        if(empty($_POST["nom"])){
-            $errors["nom"]="Veuillez renseigner le nom";
-        }
-        if(empty($_POST["email"])){
-            $errors["email"]="Veuillez renseigner l'email";
-        }
-        if(empty($_POST["telephone"])){
-            $errors["telephone"]="Veuillez renseigner le telephone";
-        }
-        if(empty($_POST["adresse"])){
-            $errors["adresse"]="Veuillez renseigner l'adresse";
-        }
-        if (count($errors)==0) {
+        isEmpty("prenom",$_POST["prenom"],$errors,"Veuillez renseigner le prenom");
+        isEmpty("nom",$_POST["nom"],$errors,"Veuillez renseigner le nom");
+        isEmpty("email",$_POST["email"],$errors,"Veuillez renseigner l'email");
+        isEmpty("telephone",$_POST["telephone"],$errors,"Veuillez renseigner le telephone");
+        isEmpty("adresse",$_POST["adresse"],$errors,"Veuillez renseigner l'adresse");
+        
+        if (validate($errors)) {
             $client=[
                 "prenom"=>$_POST["prenom"],
                 "nom"=>$_POST["nom"],
@@ -33,13 +24,11 @@ $ajout=function(){
                 "adresse"=>$_POST["adresse"]
             ];
             addClient($client);
-            loadView("clients/liste",["clients"=>getAllclients()]);
+            redirectTo("client","liste");
         }
-        else{
-            loadView("clients/ajout",["errors"=>$errors]);
-        }
+        
     }
-loadView("clients/ajout",[]);
+loadView("clients/ajout",["errors"=>$errors]);
 };
 
 $detail=function(){

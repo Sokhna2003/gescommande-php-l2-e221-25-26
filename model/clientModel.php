@@ -10,5 +10,10 @@ function getClientById($id){
    return executeSelect($sql,["id"=>$id],true);
 }
 
+function addclient(array $client){
+    $sql="INSERT INTO client(prenom,nom,email,telephone,adresse) VALUES(:prenom,:nom,:email,:telephone,:adresse)";
+    executeUpdate($sql,$client);
+}
+
 
 
