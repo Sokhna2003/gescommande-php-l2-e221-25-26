@@ -7,7 +7,39 @@ loadView("clients/liste",["clients"=>$clients,"total_client"=>$total_client]);
 };
 
 $ajout=function(){
-loadView("clients/ajout",[],"side");
+    $errors=[];
+    if (isset($_POST["ajouter"])) {
+        if(empty($_POST["prenom"])){
+            $errors["prenom"]="Veuillez renseigner le prenom";
+        }
+        if(empty($_POST["nom"])){
+            $errors["nom"]="Veuillez renseigner le nom";
+        }
+        if(empty($_POST["email"])){
+            $errors["email"]="Veuillez renseigner l'email";
+        }
+        if(empty($_POST["telephone"])){
+            $errors["telephone"]="Veuillez renseigner le telephone";
+        }
+        if(empty($_POST["adresse"])){
+            $errors["adresse"]="Veuillez renseigner l'adresse";
+        }
+        if (count($errors)==0) {
+            $client=[
+                "prenom"=>$_POST["prenom"],
+                "nom"=>$_POST["nom"],
+                "email"=>$_POST["email"],
+                "telephone"=>$_POST["telephone"],
+                "adresse"=>$_POST["adresse"]
+            ];
+            addClient($client);
+            loadView("clients/liste",["clients"=>getAllclients()]);
+        }
+        else{
+            loadView("clients/ajout",["errors"=>$errors]);
+        }
+    }
+loadView("clients/ajout",[]);
 };
 
 $detail=function(){
